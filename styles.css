@@ -13,9 +13,66 @@ h1 {
   text-align: center;
 }
 
-#banner img {
-  width: 1200px;
-  height: 150px;
+#best_film {
+  width: 65%;
+  height: 65%;
+  padding: 25px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 5%;
+  border: 5px ridge grey;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 25px;
+  -webkit-box-shadow: 1px 2px 15px white;
+          box-shadow: 1px 2px 15px white;
+}
+
+#best_film img {
+  width: 200px;
+  height: 300px;
+  display: inline-block;
+  border: 3px ridge grey;
+  border-radius: 5px;
+  -webkit-box-shadow: 5px 5px 5px black;
+          box-shadow: 5px 5px 5px black;
+}
+
+#best_film .info {
+  min-width: 300px;
+  min-height: 150px;
+  padding: 20px;
+  display: inline-block;
+  margin-left: 25px;
+  position: relative;
+}
+
+#best_film .info .best_film_title {
+  color: white;
+}
+
+#best_film .info .description {
+  color: white;
+  text-align: justify;
+}
+
+#best_film .info a {
+  padding: 5px 10px 5px 10px;
+  font-size: 20px;
+  text-decoration: none;
+  border: 2px ridge grey;
+  background: white;
+  border-radius: 10px;
+  color: black;
+  position: absolute;
+  left: 50%;
+  -webkit-transform: translate(-50%);
+          transform: translate(-50%);
 }
 
 .carousel {

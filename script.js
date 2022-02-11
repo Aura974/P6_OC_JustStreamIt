@@ -17,7 +17,8 @@ async function getData() {
 getData()
     .then(function(res) {
         console.log(res)
-        getImg(res);
+        getImg(res)
+        getBestFilm(res);
     })
     // .catch(function(err) {
     //     console.log(err);
@@ -72,8 +73,13 @@ function getImg(data) {
     for (var i = 0; i < dramaPage2.length; i++) {
         dramaPage2[i].querySelector("a img").src = data[3].results[i+3].image_url;
     }
+}
 
-
+function getBestFilm(data) {
+    let bestFilm = document.getElementById("best_film")
+    bestFilm.querySelector("img").src = data[0].results[0].image_url;
+    bestFilm.getElementsByClassName("info")[0].querySelector("h1.best_film_title").innerText = data[0].results[0].title;
+    bestFilm.getElementsByClassName("info")[0].querySelector("p.description").innerText = "temporary description, Nostrud elit consectetur qui reprehenderit culpa duis irure. Ea qui deserunt eiusmod nulla laborum sunt velit. Quis proident id pariatur fugiat eu in adipisicing ullamco eiusmod nulla sunt tempor proident. Velit reprehenderit ad sint do nulla incididunt laboris. Lorem dolor nostrud eu proident incididunt labore id.";
 }
 
 // function getTitle(data) {

@@ -15,56 +15,59 @@ h1 {
   text-align: center;
 }
 
-#banner {
-  
+#best_film {
+  width: 65%;
+  height:65%;
+  padding: 25px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 5%;
+  border: 5px ridge grey;
+  display: flex;
+  justify-content: center;
+  background: rgba(0, 0, 0, .3);
+  border-radius: 25px;
+  box-shadow: 1px 2px 15px white;
+
   img {
-    width: 1200px;
-    height: 150px;
+    width: 200px;
+    height:300px;
+    display: inline-block;
+    border: 3px ridge grey;
+    border-radius: 5px;
+    box-shadow: 5px 5px 5px black;
   }
-  
-//   #the_best_ranting_content {
-//     width: 65%;
-//     height:65%;
-//     padding: 25px;
-//     margin-left: auto;
-//     margin-right: auto;
-//     border: 5px ridge grey;
-//     display: flex;
-//     align-items: center;
-//     justify-content: center;
-//     background: rgba(0, 0, 0, .3);
-//     border-radius: 25px;
-//     box-shadow: 1px 2px 15px white;
-// }
 
-// .best_rating_img_img {
-//     width: 350px;
-//     height:500px;
-//     display: inline-block;
-//     border: 3px ridge grey;
-//     border-radius: 5px;
-//     box-shadow: 5px 5px 5px black;
-// }
+  .info {
+    min-width: 300px;
+    min-height: 150px;
+    padding:20px;
+    display: inline-block;
+    margin-left:25px;
+    position: relative;
+      
+    .best_film_title {
+      color: white;
+    }
 
-// .infos {
-//     min-width: 300px;
-//     min-height: 150px;
-//     padding:20px;
-//     display: inline-block;
-//     top: -150px;
-//     margin-left:25px;
-//     position: relative;
-// }
+    .description {
+      color: white;
+      text-align: justify;
+    }
 
-// .infos .the_best_rating_title{
-//     color: white;
-// }
-
-// .infos .description {
-//     max-width: 500px;
-//     color: white;
-// }
-
+    a {
+      padding: 5px 10px 5px 10px;
+      font-size: 20px;
+      text-decoration: none;
+      border: 2px ridge grey;
+      background: rgba(255, 255, 255, 255);
+      border-radius: 10px;
+      color: black;
+      position: absolute;
+      left: 50%;
+      transform: translate(-50%);
+    }
+  }
 }
 
 .carousel {
