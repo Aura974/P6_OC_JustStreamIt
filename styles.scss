@@ -1,0 +1,124 @@
+$duration: 250ms;
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background-color: #000;
+  font-family: Arial;
+}
+
+h1 {
+  color: red;
+  text-align: center;
+}
+
+#banner {
+  
+  img {
+    width: 1200px;
+    height: 150px;
+  }
+  
+//   #the_best_ranting_content {
+//     width: 65%;
+//     height:65%;
+//     padding: 25px;
+//     margin-left: auto;
+//     margin-right: auto;
+//     border: 5px ridge grey;
+//     display: flex;
+//     align-items: center;
+//     justify-content: center;
+//     background: rgba(0, 0, 0, .3);
+//     border-radius: 25px;
+//     box-shadow: 1px 2px 15px white;
+// }
+
+// .best_rating_img_img {
+//     width: 350px;
+//     height:500px;
+//     display: inline-block;
+//     border: 3px ridge grey;
+//     border-radius: 5px;
+//     box-shadow: 5px 5px 5px black;
+// }
+
+// .infos {
+//     min-width: 300px;
+//     min-height: 150px;
+//     padding:20px;
+//     display: inline-block;
+//     top: -150px;
+//     margin-left:25px;
+//     position: relative;
+// }
+
+// .infos .the_best_rating_title{
+//     color: white;
+// }
+
+// .infos .description {
+//     max-width: 500px;
+//     color: white;
+// }
+
+}
+
+.carousel {
+  display: grid;
+  grid-template-columns: repeat(3,100%);
+  overflow:hidden;
+  scroll-behavior: smooth;
+
+  section {
+    width: 100%;
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(4, auto);
+    margin: 40px 0;
+    
+    .film {
+      padding: 0 2px;
+      transition: $duration all;
+      
+      &:hover { 
+        margin: 0 40px;
+        transform: scale(1.2);
+      }
+
+      .title {
+        position: absolute;
+        font-size: small;
+        bottom: 0;
+        color: #fff;
+      }
+      
+    }
+    
+    .arrow {
+      position: absolute;
+      color: #fff;
+      text-decoration: none;
+      font-size: 5em;
+      background:rgb(0,0,0);
+      width: 50px;
+      padding: 20px;
+      text-align: center;
+      z-index: 1;
+    }
+
+    .left_arrow {
+      top:0; bottom:0; left:0;
+      background: linear-gradient(-90deg, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 100%);
+    }
+    
+    .right_arrow {
+      top:0; bottom:0; right: 0;
+      background: linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 100%);
+    }
+      
+  }
+}
