@@ -24,15 +24,19 @@ async function bestFilm(url, genre) {
     var bestFilm = [];
     await getData(url, bestFilm);
     genre.querySelector("img").src = bestFilm[0].image_url;
+    genre.getElementsByClassName("info")[0].querySelector("h1.best_film_title").innerText = bestFilm[0].title;
+    genre.getElementsByClassName("info")[0].querySelector("p.description").innerText = bestFilm[0].description;
 }
 
 async function carousel(url, genre, movieData) {
     await getData(url, movieData);
     for (var i = 0, j = 0; i < 4; i++, j++) {
-        genre[i].querySelector("a img").src = movieData[j].image_url;
+        genre[i].querySelector("img").src = movieData[j].image_url;
+        genre[i].querySelector("img").setAttribute("id",movieData[j].id );
     }
     for (var i = 4, j = 3; i < 8; i++, j++) {
-        genre[i].querySelector("a img").src = movieData[j].image_url;
+        genre[i].querySelector("img").src = movieData[j].image_url;
+        genre[i].querySelector("img").setAttribute("id",movieData[j].id );
     }    
 }
 
@@ -48,14 +52,39 @@ var fantasy = [];
 var comedy = [];
 var drama = [];
 
-bestFilm(allUrls[0], movieGenres[0]);
+bestFilm(allUrls[0], movieGenres[0], bestRating);
 carousel(allUrls[0], movieGenres[1], bestRating);
 carousel(allUrls[1], movieGenres[2], fantasy);
 carousel(allUrls[2], movieGenres[3], comedy);
 carousel(allUrls[3], movieGenres[4], drama);
 
+var btnOpen = document.querySelector("[data-open]");
+var btnClose = document.querySelector(".close");
+var isVisible = "is-visible";
 
+btnOpen.addEventListener("click", function() {
+    var modalId = btnOpen.dataset.open;
+    document.getElementById(modalId).classList.add(isVisible);
+    document.querySelector("body").style.overflow = "hidden";
+});
 
+btnClose.addEventListener("click", function() {
+    var modalId = btnOpen.dataset.open;
+    document.getElementById(modalId).classList.remove(isVisible);
+    document.querySelector("body").style.overflow = "visible";
+});
+
+// var modal = document.querySelector(".modal");
+// var btnOpen = document.querySelector("#open-modal");
+// var btnClose = document.querySelector(".close");
+
+// btnOpen.onclick = function() {
+//     modal.style.visibility = "visible";
+// }
+
+// btnClose.onclick = function() {
+//     modal.style.visibility = "hidden";
+// }
 
 
 
