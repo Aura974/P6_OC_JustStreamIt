@@ -37,8 +37,10 @@ body {
 
 .modal .modal-dialog {
   position: relative;
+  padding: 20px;
+  min-width: 500px;
   max-width: 800px;
-  max-height: 800px;
+  max-height: 100%;
   border-radius: 5px;
   border: solid;
   border-color: white;
@@ -46,6 +48,27 @@ body {
   color: white;
   overflow: auto;
   cursor: default;
+}
+
+.modal .modal-dialog .id-test {
+  display: block;
+  margin: auto;
+}
+
+.modal .modal-dialog .modal-content .close {
+  float: right;
+  text-align: center;
+  display: block;
+  height: 25px;
+  width: 25px;
+  line-height: 25px;
+  border-radius: 50%;
+  background-color: rgba(255, 0, 0, 0.2);
+}
+
+.modal .modal-dialog .modal-content .close:hover {
+  cursor: pointer;
+  font-weight: bold;
 }
 
 .modal.is-visible {
@@ -72,7 +95,6 @@ h1 {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  background: rgba(0, 0, 0, 0.3);
   border-radius: 25px;
   -webkit-box-shadow: 1px 2px 15px white;
           box-shadow: 1px 2px 15px white;

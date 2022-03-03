@@ -16,6 +16,7 @@ var fantasy = [];
 var comedy = [];
 var drama = []; 
 
+
 async function getMoviesList(url, movieData) {
     response = await fetch(url);
     resJson = await response.json();
@@ -23,6 +24,7 @@ async function getMoviesList(url, movieData) {
         movieData.push(baseUrl + resJson.results[i].id);
     }
 }
+
 
 async function bestFilm(url, genre) {
     response = await fetch(url);
@@ -41,11 +43,8 @@ async function bestFilm(url, genre) {
     genre.querySelector("#open-modal").dataset.open = resJson.id;
 
     modalData(resJson);
-
-
-    
-
 }
+
 
 async function carousel(urlList, genreList) {
     let jsonList = [];
@@ -67,11 +66,6 @@ async function carousel(urlList, genreList) {
     }
 }
 
-function modalData(json) {
-    document.querySelector("[data-img]").innerHTML = json.image_url;
-    document.querySelector("[data-title]").innerHTML = json.title;
-    document.querySelector("[data-genre]").innerHTML = json.genres;
-}
 
 function createModal() {
     divModal = document.createElement("div");
@@ -87,23 +81,56 @@ function createModal() {
 
     span = document.createElement("span");
     span.className = "close";
-    span.setAttribute("data-close", "");
+    span.innerHTML = "&times;";
 
-    dataImg = document.createElement("p");
+    dataImg = document.createElement("img");
     dataImg.setAttribute("data-img", "");
     
     dataTitle = document.createElement("p");
     dataTitle.setAttribute("data-title", "");
+    dataTitle.innerHTML = "Titre : ";
 
     dataGenre = document.createElement("p");
     dataGenre.setAttribute("data-genre", "");
+    dataGenre.innerHTML = "Genre : ";
+
+    dataDate = document.createElement("p");
+    dataDate.setAttribute("data-date", "");
+    dataDate.innerHTML = "Date de sortie : ";
+
+    dataRated = document.createElement("p");
+    dataRated.setAttribute("data-rated", "");
+    dataRated.innerHTML = "Rated : ";
+
+    dataImdbScore = document.createElement("p");
+    dataImdbScore.setAttribute("data-imdb", "");
+    dataImdbScore.innerHTML = "Note IMDb : ";
+
+    dataDirectors = document.createElement("p");
+    dataDirectors.setAttribute("data-dir", "");
+    dataDirectors.innerHTML = "Réalisation : ";
+
+    dataActors = document.createElement("p");
+    dataActors.setAttribute("data-actors", "");
+    dataActors.innerHTML = "Casting principal : ";
 
     divContent.append
     
-    (span, dataImg, dataTitle, dataGenre);
+    (span, dataImg, dataTitle, dataGenre, dataDate, dataRated, dataImdbScore, dataDirectors, dataActors);
 
     divModal.appendChild(divDialog);
     return divModal;
+}
+
+function modalData(json) {
+    document.querySelector("[data-img]").src = json.image_url;
+    document.querySelector("[data-title]").appendChild(document.createTextNode(json.title));
+    document.querySelector("[data-genre]").appendChild(document.createTextNode(json.genres));
+
+    var d = new Date(json.date_published);
+    document.querySelector("[data-date]").appendChild(document.createTextNode((d.getDate()) + "/" + (d.getMonth()+1) + "/" + (d.getFullYear())));
+
+    document.querySelector("[data-rated]").appendChild(document.createTextNode(json.rated));
 }
 
 
@@ -123,7 +150,6 @@ async function main() {
 main();
 
 var btnOpen = document.querySelector("[data-open]");
-var btnClose = document.querySelector(".close");
 var isVisible = "is-visible";
 
 btnOpen.addEventListener("click", function() {
@@ -132,8 +158,16 @@ btnOpen.addEventListener("click", function() {
     document.querySelector("body").style.overflow = "hidden";
 });
 
-btnClose.addEventListener("click", function() {
-    var modalId = btnOpen.dataset.open;
-    document.getElementById(modalId).classList.remove(isVisible);
-    document.querySelector("body").style.overflow = "visible";
+document.addEventListener("click", function(e) {
+    if (e.target && e.target.className == "close") {
+        document.querySelector(".modal.is-visible").classList.remove(isVisible);
+        document.querySelector("body").style.overflow = "visible";
+    }
+})
+
+document.addEventListener("click", function(e) {
+    if (e.target == document.querySelector(".modal.is-visible")) {
+        document.querySelector(".modal.is-visible").classList.remove(isVisible);
+        document.querySelector("body").style.overflow = "visible";
+    }
 });
