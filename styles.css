@@ -40,7 +40,7 @@ body {
   padding: 20px;
   min-width: 500px;
   max-width: 800px;
-  max-height: 100%;
+  max-height: 85%;
   border-radius: 5px;
   border: solid;
   border-color: white;
@@ -50,7 +50,7 @@ body {
   cursor: default;
 }
 
-.modal .modal-dialog .id-test {
+.modal .modal-dialog .data-img {
   display: block;
   margin: auto;
 }
@@ -81,7 +81,7 @@ h1 {
   text-align: center;
 }
 
-#best_film {
+#best-film {
   width: 65%;
   height: 65%;
   padding: 25px;
@@ -100,7 +100,7 @@ h1 {
           box-shadow: 1px 2px 15px white;
 }
 
-#best_film img {
+#best-film #best-film-img {
   width: 200px;
   height: 300px;
   display: inline-block;
@@ -110,7 +110,7 @@ h1 {
           box-shadow: 5px 5px 5px black;
 }
 
-#best_film .info {
+#best-film .info {
   min-width: 300px;
   min-height: 150px;
   padding: 20px;
@@ -119,18 +119,18 @@ h1 {
   position: relative;
 }
 
-#best_film .info .best_film_title {
+#best-film .info .best-film-title {
   display: block;
   color: white;
 }
 
-#best_film .info .description {
+#best-film .info .description {
   color: white;
   display: block;
   text-align: justify;
 }
 
-#best_film .info #open-modal {
+#best-film .info #open-modal {
   font-weight: bold;
   background: white;
   color: black;
@@ -144,8 +144,7 @@ h1 {
 .carousel {
   display: -ms-grid;
   display: grid;
-  -ms-grid-columns: (100%)[3];
-      grid-template-columns: repeat(3, 100%);
+  grid-template-columns: repeat(3, 100%);
   overflow: hidden;
   scroll-behavior: smooth;
 }
@@ -155,8 +154,7 @@ h1 {
   position: relative;
   display: -ms-grid;
   display: grid;
-  -ms-grid-columns: (auto)[4];
-      grid-template-columns: repeat(4, auto);
+  grid-template-columns: repeat(4, auto);
   margin: 40px 0;
 }
 
@@ -191,7 +189,7 @@ h1 {
   z-index: 1;
 }
 
-.carousel section .left_arrow {
+.carousel section .left-arrow {
   top: 0;
   bottom: 0;
   left: 0;
@@ -199,7 +197,7 @@ h1 {
   background: linear-gradient(-90deg, rgba(0, 0, 0, 0) 0%, black 100%);
 }
 
-.carousel section .right_arrow {
+.carousel section .right-arrow {
   top: 0;
   bottom: 0;
   right: 0;
