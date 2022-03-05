@@ -32,8 +32,8 @@ body {
   .modal-dialog {
     position: relative;
     padding: 20px;
-    min-width: 500px;
-    max-width: 800px;
+    min-width: 50%;
+    max-width: 70%;
     max-height: 85%;
     border-radius: 5px;
     border: solid;
@@ -46,6 +46,7 @@ body {
     .data-img {
       display: block;
       margin: auto;
+      pointer-events: none;
     }
 
     .modal-content .close {
@@ -147,10 +148,15 @@ h1 {
     
     .film {
       padding: 0 2px;
-      transition: $duration all;
+      // transition: $duration all;
+
+      img {
+        transition: $duration all;
+      }
       
-      &:hover { 
+      img:hover { 
         margin: 0 40px;
+        transition: $duration all;
         transform: scale(1.2);
       }
 

@@ -38,8 +38,8 @@ body {
 .modal .modal-dialog {
   position: relative;
   padding: 20px;
-  min-width: 500px;
-  max-width: 800px;
+  min-width: 50%;
+  max-width: 70%;
   max-height: 85%;
   border-radius: 5px;
   border: solid;
@@ -53,6 +53,7 @@ body {
 .modal .modal-dialog .data-img {
   display: block;
   margin: auto;
+  pointer-events: none;
 }
 
 .modal .modal-dialog .modal-content .close {
@@ -144,7 +145,8 @@ h1 {
 .carousel {
   display: -ms-grid;
   display: grid;
-  grid-template-columns: repeat(3, 100%);
+  -ms-grid-columns: (100%)[3];
+      grid-template-columns: repeat(3, 100%);
   overflow: hidden;
   scroll-behavior: smooth;
 }
@@ -154,18 +156,24 @@ h1 {
   position: relative;
   display: -ms-grid;
   display: grid;
-  grid-template-columns: repeat(4, auto);
+  -ms-grid-columns: (auto)[4];
+      grid-template-columns: repeat(4, auto);
   margin: 40px 0;
 }
 
 .carousel section .film {
   padding: 0 2px;
+}
+
+.carousel section .film img {
   -webkit-transition: 500ms all;
   transition: 500ms all;
 }
 
-.carousel section .film:hover {
+.carousel section .film img:hover {
   margin: 0 40px;
+  -webkit-transition: 500ms all;
+  transition: 500ms all;
   -webkit-transform: scale(1.2);
           transform: scale(1.2);
 }

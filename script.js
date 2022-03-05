@@ -34,15 +34,15 @@ async function bestFilm(url, genre) {
     genre.getElementsByClassName("info")[0].querySelector("h1.best-film-title").innerText = resJson.title;
     genre.getElementsByClassName("info")[0].querySelector("p.description").innerText = resJson.description;
 
-    // modal = createModal();
-    // aside = document.createElement("aside");
-    // aside.appendChild(modal);
-    // genre.appendChild(aside);
-    // genre.querySelector("aside div").setAttribute("id", resJson.id);
+    modal = createModal();
+    aside = document.createElement("aside");
+    aside.appendChild(modal);
+    genre.appendChild(aside);
+    genre.querySelector("aside div").setAttribute("id", resJson.id);
 
-    // genre.querySelector("#open-modal").dataset.open = resJson.id;
+    genre.querySelector("#open-modal").dataset.open = resJson.id;
 
-    // modalData(resJson, genre);
+    modalData(resJson, genre);
 
     
 }
@@ -124,6 +124,15 @@ function modalData(json, genre) {
         }
     }
 
+    let genres = "";
+    for (let i in json.genres) {
+        if (i == json.genres.length - 1) {
+            genres += json.genres[i];
+        } else {
+            genres += json.genres[i] + ", ";
+        }
+    }
+
     hours = Math.floor(json.duration / 60);
     minutes = Math.round(json.duration % 60);
 
@@ -146,7 +155,7 @@ function modalData(json, genre) {
 
     genre.querySelector("[data-info]").innerHTML = 
     "<strong>Titre : </strong>" + json.title 
-    + "<br><br><strong>Genre :  </strong>" + json.genres
+    + "<br><br><strong>Genre :  </strong>" + genres
     +"<br><br><strong>Date de sortie : </strong>" + (d.getDate()) + "/" + (d.getMonth()+1) + "/" + (d.getFullYear())
     +"<br><br><strong>Rated : </strong>" + rated
     +"<br><br><strong>Note Imdb : </strong>" + json.imdb_score + "/10"
@@ -176,8 +185,8 @@ async function main() {
 main();
 
 var btnOpen = document.querySelector("#open-modal");
-var images = document.querySelectorAll("img");
-console.log(images)
+var images = document.querySelectorAll(".film img");
+
 var isVisible = "is-visible";
 
 btnOpen.addEventListener("click", function() {
