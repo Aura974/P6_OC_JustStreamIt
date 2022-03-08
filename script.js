@@ -6,15 +6,177 @@ const allUrls = [
     "http://localhost:8000/api/v1/titles/?genre=drama&sort_by=-imdb_score&page_size=7"];
 const movieGenres = [
     document.getElementById("best-film"),
-    document.querySelectorAll("#crsl1-sect1 div.film, #crsl1-sect2 div.film"),
-    document.querySelectorAll("#crsl2-sect1 div.film, #crsl2-sect2 div.film"),
-    document.querySelectorAll("#crsl3-sect1 div.film, #crsl3-sect2 div.film"),
-    document.querySelectorAll("#crsl4-sect1 div.film, #crsl4-sect2 div.film")]
+    document.querySelectorAll("#carousel1 img"),
+    document.querySelectorAll("#carousel2 img"),
+    document.querySelectorAll("#carousel3 img"),
+    document.querySelectorAll("#carousel4 img")]
 
 var bestRating = [];
 var fantasy = [];
 var comedy = [];
-var drama = []; 
+var drama = [];
+
+class Carousel {
+    constructor(element, options={}) {
+    
+        this.element = element
+        this.options = Object.assign({}, {
+            slidesToScroll: 3,
+            slidesVisible: 4,
+            title: "", 
+        }, options)
+        let children = [].slice.call(element.children)
+        this.currentItem = 0
+
+        this.title = document.createElement("h1")
+        this.title.setAttribute("class", "title")
+        this.title.innerHTML = this.options.title
+        this.element.appendChild(this.title)
+    
+        this.root = this.createDivWithClass("carousel")
+        this.container = this.createDivWithClass("carousel__container")
+        this.root.appendChild(this.container)
+        this.element.appendChild(this.root)
+
+    
+        this.items = children.map((child) => {
+          let item = this.createDivWithClass("carousel__item")
+          item.appendChild(child)
+          this.container.appendChild(item)
+          return item
+        })
+
+    
+        this.setStyle()
+        this.createNavigation()
+    
+    }
+    
+    createDivWithClass (className) {
+    let div = document.createElement("div")
+    div.setAttribute("class", className)
+    return div
+    }
+
+    setStyle () {
+    let ratio = this.items.length / this.options.slidesVisible
+    this.container.style.width = (ratio * 100) + "%"
+    this.items.forEach(item => item.style.width = ((100 / this.options.slidesVisible / ratio) + "%"))
+    }
+
+    createNavigation() {
+    let nextButton = this.createDivWithClass("carousel__next")
+    nextButton.innerHTML = "&rsaquo;"
+    let prevButton = this.createDivWithClass("carousel__prev")
+    prevButton.innerHTML = "&lsaquo;"
+    this.root.appendChild(nextButton)
+    this.root.appendChild(prevButton)
+    nextButton.addEventListener("click", this.next.bind(this))
+    prevButton.addEventListener("click", this.prev.bind(this))
+    }
+
+    next() {
+    this.goToItem(this.currentItem + this.options.slidesToScroll)
+    }
+
+    prev() {
+    this.goToItem(this.currentItem - this.options.slidesToScroll)
+    }
+
+    goToItem(index) {
+    if (index < 0) {
+        index = this.items.length - this.options.slidesVisible
+    } else if (index >= this.items.length || this.items[this.currentItem + this.options.slidesVisible] === undefined) {
+        index = 0
+    }
+    let translateX = index * -100 / this.items.length
+    this.container.style.transform = "translate3d(" + translateX + "%, 0, 0)"
+    this.currentItem = index
+    }
+        
+}
+
+class Modal {
+    constructor(element, json, options={}) {
+    
+        this.element = element
+        this.json = json
+        this.options = Object.assign({}, {
+            id: 1, 
+        }, options)
+    
+        this.modalRoot = document.createElement("aside")
+        this.modalContainer = this.createDivWithClass("modal")
+        this.modalContainer.setAttribute("id", this.options.id)
+        this.modalDialog = this.createDivWithClass("modal__dialog")
+        this.modalContent = this.createDivWithClass("modal__content")
+        this.modalDialog.appendChild(this.modalContent)
+        this.modalContainer.appendChild(this.modalDialog)
+        this.modalRoot.appendChild(this.modalContainer)
+        this.wrapper = document.querySelector("#wrapper")
+        this.wrapper.appendChild(this.modalRoot)
+
+        this.span = document.createElement("span")
+        this.span.setAttribute("class", "close")
+        this.span.innerHTML = "x"
+        this.image = document.createElement("img")
+        this.image.setAttribute("class", "modal__img")
+        this.image.src = this.json.image_url
+        this.parag = document.createElement("p")
+        this.parag.setAttribute("class", "data-info")
+        this.modalContent.append(this.span, this.image, this.parag)
+        
+        let genres = this.addSpaces(json.genres)
+        let actors = this.addSpaces(json.actors)
+        let directors = this.addSpaces(json.directors)
+        let d = new Date(json.date_published)
+        let rated = this.checkIfNull(json.rated, "Not rated or unkown rating")
+        let income = this.checkIfNull(json.worldwide_gross_income, null)
+        let hours = Math.floor(json.duration / 60)
+        let minutes = Math.round(json.duration % 60)
+
+        this.parag.innerHTML = 
+        "<strong>Titre : </strong>" + json.title 
+        + "<br><br><strong>Genre :  </strong>" + genres
+        +"<br><br><strong>Date de sortie : </strong>" + (d.getDate()) + "/" + (d.getMonth()+1) + "/" + (d.getFullYear())
+        +"<br><br><strong>Rated : </strong>" + rated
+        +"<br><br><strong>Note Imdb : </strong>" + json.imdb_score + "/10"
+        +"<br><br><strong>Réalisation : </strong>" + directors
+        +"<br><br><strong>Acteurs : </strong>" + actors
+        +"<br><br><strong>Durée : </strong>" + hours + "h " + minutes + "min"
+        +"<br><br><strong>Pays d'origine : </strong>" + json.countries
+        +"<br><br><strong>Box-Office : </strong>" + income
+        +"<br><br><strong>Synopsis : </strong>" + json.description
+    }
+
+    addSpaces(entry) {
+        let list = "";
+        for (let i in entry) {
+            if (i == entry.length -1) {
+                list += entry[i];
+            } else {
+                list += entry[i] + ", ";
+            }
+        }
+        return list;
+    }
+
+    checkIfNull(entry, text) {
+        let list = ""
+        if (entry == text) {
+            list = "N/A";
+        } else {
+            list = entry;
+        }
+        return list;
+    }
+
+    createDivWithClass (className) {
+        let div = document.createElement("div")
+        div.setAttribute("class", className)
+        return div
+    }
+}
 
 
 async function getMoviesList(url, movieData) {
@@ -30,143 +192,85 @@ async function bestFilm(url, genre) {
     response = await fetch(url);
     resJson = await response.json();
 
-    genre.querySelector("#best-film-img").src = resJson.image_url;
-    genre.getElementsByClassName("info")[0].querySelector("h1.best-film-title").innerText = resJson.title;
-    genre.getElementsByClassName("info")[0].querySelector("p.description").innerText = resJson.description;
+    genre.querySelector("#best-film__img").src = resJson.image_url;
+    genre.querySelector("#best-film__title").innerText = resJson.title;
+    genre.querySelector("#best-film__description").innerText = resJson.description;
 
-    modal = createModal();
-    aside = document.createElement("aside");
-    aside.appendChild(modal);
-    genre.appendChild(aside);
-    genre.querySelector("aside div").setAttribute("id", resJson.id);
+    new Modal (genre, resJson, {
+        id: resJson.id
+    })
 
     genre.querySelector("#open-modal").dataset.open = resJson.id;
-
-    modalData(resJson, genre);
-
-    
 }
 
 
-async function carousel(urlList, genreList) {
-    let jsonList = [];
+async function carouselImages(urlList, genreList) {
+    const jsonList = [];
 
-    for (var i = 0; i < urlList.length; i++){
-        response = await fetch(urlList[i]);
+    for (const url of urlList){
+        response = await fetch(url);
         resJson = await response.json();
         jsonList.push(resJson);
     }
     
-    for (var i = 0; i < 4; i++) {
-        genreList[i].querySelector("img").src = jsonList[i].image_url;
-        genreList[i].querySelector("img").setAttribute("data-open", jsonList[i].id);
-
-
-        modal = createModal();
-        aside = document.createElement("aside");
-        aside.appendChild(modal);
-        genreList[i].appendChild(aside);
-        genreList[i].querySelector("aside div").setAttribute("id", jsonList[i].id);
-
-        modalData(jsonList[i], genreList[i]);
-
-
+    for (var i = 0; i < genreList.length; i++) {
+        genreList[i].src = jsonList[i].image_url;
+        genreList[i].setAttribute("data-open", jsonList[i].id);
+        new Modal (genreList[i], jsonList[i], {
+            id: jsonList[i].id
+        })
     }
 
-    for (var i = 4, j = 3; i < 8; i++, j++) {
-        genreList[i].querySelector("img").src = jsonList[j].image_url;
-        genreList[i].querySelector("img").setAttribute("data-open", jsonList[j].id);
-    }
 }
 
 
-function createModal() {
-    divModal = document.createElement("div");
-    divModal.className = "modal";
-    divModal.setAttribute("id", "");
-
-    divDialog = document.createElement("div");
-    divDialog.className = "modal-dialog";
-
-    divContent = document.createElement("div");
-    divContent.className = "modal-content";
-    divDialog.appendChild(divContent);
-
-    span = document.createElement("span");
-    span.className = "close";
-    span.innerHTML = "&times;";
-
-    dataImg = document.createElement("img");
-    dataImg.setAttribute("data-img", "");
-    dataImg.className = "data-img";
-    
-    dataInfo = document.createElement("p");
-    dataInfo.setAttribute("data-info", "");
-
-    divContent.append
-    
-    (span, dataImg, dataInfo);
-
-    divModal.appendChild(divDialog);
-    return divModal;
-}
 
 
-function modalData(json, genre) {
-    genre.querySelector("[data-img]").src = json.image_url;
 
-    let actors = "";
-    for (let i in json.actors) {
-        if (i == json.actors.length - 1) {
-            actors += json.actors[i];
-        } else {
-            actors += json.actors[i] + ", ";
+document.addEventListener("DOMContentLoaded", function() {
+
+    new Carousel (document.querySelector("#carousel1"), {
+        title: "Test titre"
+    })
+  
+    new Carousel (document.querySelector("#carousel2"), {
+        title: "Test titre 2"
+    })
+
+    new Carousel (document.querySelector("#carousel3"), {
+        title: "Test titre 3"
+    })
+
+    new Carousel (document.querySelector("#carousel4"), {
+        title: "Test titre 4"
+    })
+
+    var images = document.querySelectorAll(".carousel__item img")
+
+    for(var img of images) {
+        img.addEventListener("click", function() {
+            var modalId = this.dataset.open;
+            document.getElementById(modalId).classList.add(isVisible)
+            document.querySelector("body").style.overflow = "hidden"
+        })
+    }
+
+    document.addEventListener("click", function(e) {
+        if (e.target && e.target.className == "close") {
+            document.querySelector(".modal.is-visible").classList.remove(isVisible);
+            document.querySelector("body").style.overflow = "visible";
         }
-    }
-
-    let genres = "";
-    for (let i in json.genres) {
-        if (i == json.genres.length - 1) {
-            genres += json.genres[i];
-        } else {
-            genres += json.genres[i] + ", ";
+    })
+    
+    document.addEventListener("click", function(e) {
+        if (e.target == document.querySelector(".modal.is-visible")) {
+            document.querySelector(".modal.is-visible").classList.remove(isVisible);
+            document.querySelector("body").style.overflow = "visible";
         }
-    }
+    });
+  
+})
 
-    hours = Math.floor(json.duration / 60);
-    minutes = Math.round(json.duration % 60);
-
-    let d = new Date(json.date_published);
-
-    let rated = "";
-    if (json.rated == "Not rated or unkown rating") {
-        rated = "N/A";
-    } else {
-        rated = json.rated;
-    }
-
-    let income = "";
-    if (json.worldwide_gross_income == null) {
-        income = "N/A";
-    } else {
-        income = json.worldwide_gross_income;
-    }
-
-
-    genre.querySelector("[data-info]").innerHTML = 
-    "<strong>Titre : </strong>" + json.title 
-    + "<br><br><strong>Genre :  </strong>" + genres
-    +"<br><br><strong>Date de sortie : </strong>" + (d.getDate()) + "/" + (d.getMonth()+1) + "/" + (d.getFullYear())
-    +"<br><br><strong>Rated : </strong>" + rated
-    +"<br><br><strong>Note Imdb : </strong>" + json.imdb_score + "/10"
-    +"<br><br><strong>Réalisation : </strong>" + json.directors
-    +"<br><br><strong>Acteurs : </strong>" + actors
-    +"<br><br><strong>Durée : </strong>" + hours + "h " + minutes + "min"
-    +"<br><br><strong>Pays d'origine : </strong>" + json.countries
-    +"<br><br><strong>Box-Office : </strong>" + income
-    +"<br><br><strong>Synopsis : </strong>" + json.description
-    ;
-}
 
 
 async function main() {
@@ -176,16 +280,16 @@ async function main() {
     await getMoviesList(allUrls[3], drama);
 
     bestFilm(bestRating[0], movieGenres[0]);
-    carousel(bestRating, movieGenres[1]);
-    carousel(fantasy, movieGenres[2]);
-    carousel(comedy, movieGenres[3]);
-    carousel(drama, movieGenres[4]);
+    carouselImages(bestRating, movieGenres[1]);
+    carouselImages(fantasy, movieGenres[2]);
+    carouselImages(comedy, movieGenres[3]);
+    carouselImages(drama, movieGenres[4]);
 }
 
 main();
 
 var btnOpen = document.querySelector("#open-modal");
-var images = document.querySelectorAll(".film img");
+
 
 var isVisible = "is-visible";
 
@@ -193,27 +297,4 @@ btnOpen.addEventListener("click", function() {
     var modalId = this.dataset.open;
     document.getElementById(modalId).classList.add(isVisible);
     document.querySelector("body").style.overflow = "hidden";
-});
-
-for(var img of images) {
-    img.addEventListener("click", function() {
-        var modalId = this.dataset.open;
-        document.getElementById(modalId).classList.add(isVisible);
-        document.querySelector("body").style.overflow = "hidden";
-    });
-  }
-
-
-document.addEventListener("click", function(e) {
-    if (e.target && e.target.className == "close") {
-        document.querySelector(".modal.is-visible").classList.remove(isVisible);
-        document.querySelector("body").style.overflow = "visible";
-    }
-})
-
-document.addEventListener("click", function(e) {
-    if (e.target == document.querySelector(".modal.is-visible")) {
-        document.querySelector(".modal.is-visible").classList.remove(isVisible);
-        document.querySelector("body").style.overflow = "visible";
-    }
 });

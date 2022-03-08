@@ -3,3 +3,4 @@ api/
 .git/
 package.json
 styles.css.map
+.gitignore
