@@ -1,14 +1,82 @@
 $duration: 500ms;
 
-html {
-  scroll-behavior: smooth;
-}
-
 body {
   margin: 0;
   background-color: #000;
   color: #fff;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+
+  #main-title {
+    display: flex;
+    flex-direction: column;
+    padding-left: 20px;
+  }
+
+  nav ul {
+    list-style-type: none;    
+    display: flex;
+
+    li {
+      margin-right: 20px;
+
+      a {
+        position: relative;
+        display: block;
+        text-transform: uppercase;
+        text-decoration: none;
+        padding: 10px 20px;
+        color: white;
+        font-size: 1.1em;
+        font-weight: 400;
+        transition: .5s;
+        z-index: 1;
+
+        &:before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          border-top: 1px solid #778899;
+          border-bottom: 1px solid #778899;
+          transform: scaleY(2);
+          opacity: 0;
+          transition: .3s;
+        }
+        &:after {
+          content: '';
+          position: absolute;
+          top: 2px;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background-color: #778899;
+          transform: scale(0);
+          opacity: 0;
+          transition: .3s;
+          z-index: -1;
+        }
+        &:hover {
+          color: black;
+          &:before {
+            transform: scaleY(1);
+            opacity: 1;
+          }
+          &:after {
+            transform: scaleY(1);
+            opacity: 1;
+          }
+        }
+      }
+    }
+  }
 }
 
 .modal {
@@ -29,7 +97,7 @@ body {
   transition: all 350ms ease-in;
   border: solid 5px white;
 
-  .modal-dialog {
+  .modal__dialog {
     position: relative;
     padding: 20px;
     min-width: 50%;
@@ -43,13 +111,13 @@ body {
     overflow: auto;
     cursor: default;
 
-    .data-img {
+    .modal__content .modal__img {
       display: block;
       margin: auto;
       pointer-events: none;
     }
 
-    .modal-content .close {
+    .modal__content .close {
       float: right;
       text-align: center;
       display: block;
@@ -80,44 +148,44 @@ h1 {
 }
 
 #best-film {
-  width: 65%;
-  height:65%;
-  padding: 25px;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 5%;
-  border: 5px ridge grey;
+  width: 100%;
+  height: 100%;
   display: flex;
+  padding-right: 60px;
+  padding-top: 40px;
+  padding-bottom: 40px;
   justify-content: center;
-  border-radius: 25px;
-  box-shadow: 1px 2px 15px white;
+  background-color: #1b252f;
+  box-shadow: 1px 1px 10px #778899;
 
-  #best-film-img {
+  #best-film__img {
     width: 200px;
     height:300px;
-    display: inline-block;
-    border: 3px ridge grey;
+    border: 2px groove #778899;
     border-radius: 5px;
     box-shadow: 5px 5px 5px black;
   }
 
-  .info {
-    min-width: 300px;
-    min-height: 150px;
-    padding:20px;
-    display: inline-block;
+  #best-film__info {
+    max-width: 50%;
+    min-height: 100%;
+    padding-top: 40px;
+    padding-right: 120px;
     margin-left:25px;
     position: relative;
       
-    .best-film-title {
-      display: block;
+    #best-film__title {
+      display: inline-block;
       color: white;
+      font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     }
 
-    .description {
+    #best-film__description {
       color: white;
       display: block;
       text-align: justify;
+      font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+      font-size: 1.2em;
     }
 
     #open-modal {
@@ -134,61 +202,40 @@ h1 {
 }
 
 .carousel {
-  display: grid;
-  grid-template-columns: repeat(3,100%);
+  position: relative;
   overflow: hidden;
-  scroll-behavior: smooth;
 
-  section {
-    width: 100%;
-    position: relative;
-    display: grid;
-    grid-template-columns: repeat(4, auto);
-    margin: 40px 0;
-    
-    .film {
-      padding: 0 2px;
-      // transition: $duration all;
+  .carousel__container {
+    transition: transform 0.5s;
+    transform: translate3d(0, 0, 0);
 
-      img {
-        transition: $duration all;
-      }
+    .carousel__item {
+      float: left;
       
-      img:hover { 
-        margin: 0 40px;
-        transition: $duration all;
-        transform: scale(1.2);
-      }
-
-      .title {
-        position: absolute;
-        font-size: small;
-        bottom: 0;
-        color: #fff;
+      img:hover {
+        opacity: 0.6;
+        border: solid 1px white; 
+        cursor: pointer;
       }
     }
-    
-    .arrow {
-      position: absolute;
-      color: #fff;
-      text-decoration: none;
-      font-size: 5em;
-      background:rgb(0,0,0);
-      width: 50px;
-      padding: 20px;
-      text-align: center;
-      z-index: 1;
-    }
+  }
 
-    .left-arrow {
-      top:0; bottom:0; left:0;
-      background: linear-gradient(-90deg, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 100%);
-    }
-    
-    .right-arrow {
-      top:0; bottom:0; right: 0;
-      background: linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 100%);
-    }
-      
+  .carousel__next, .carousel__prev {
+    position: absolute;
+    color: #fff;
+    font-size: 5em;
+    background:rgb(0,0,0);
+    width: 50px;
+    padding: 20px;
+    text-align: center;
+    z-index: 1;
+    top: 0; bottom:0; right: 0;
+    background: linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 100%);
+    cursor: pointer;
+  }
+
+  .carousel__prev {
+    right: auto;
+    left: -20px;
   }
 }
