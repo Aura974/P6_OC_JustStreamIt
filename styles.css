@@ -1,17 +1,48 @@
-body {
-  margin: 0;
+body, html {
   background-color: #000;
   color: #fff;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+body {
+  margin: 0;
+  overflow-x: hidden;
+}
+
+h1 {
+  color: #c70000;
+  text-align: center;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 5px black;
+          box-shadow: inset 0 0 5px black;
+  border-radius: 8px;
+  background-color: #778899;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #2d3641;
+  border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #1f2429;
+}
+
+/*----- HEADER -----*/
 header {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
   -webkit-box-align: end;
       -ms-flex-align: end;
           align-items: flex-end;
@@ -21,10 +52,6 @@ header #main-title {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
   padding-left: 20px;
 }
 
@@ -46,8 +73,8 @@ header nav ul li a {
   text-decoration: none;
   padding: 10px 20px;
   color: white;
-  font-size: 1.1em;
-  font-weight: 400;
+  font-size: 1em;
+  font-weight: 500;
   -webkit-transition: .5s;
   transition: .5s;
   z-index: 1;
@@ -60,10 +87,10 @@ header nav ul li a:before {
   left: 0;
   width: 100%;
   height: 100%;
-  border-top: 1px solid #778899;
-  border-bottom: 1px solid #778899;
-  -webkit-transform: scaleY(2);
-          transform: scaleY(2);
+  border-top: 1px solid #304255;
+  border-bottom: 1px solid #304255;
+  -webkit-transform: scaleY(3);
+          transform: scaleY(3);
   opacity: 0;
   -webkit-transition: .3s;
   transition: .3s;
@@ -72,21 +99,17 @@ header nav ul li a:before {
 header nav ul li a:after {
   content: '';
   position: absolute;
-  top: 2px;
+  top: 1px;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: #778899;
+  background-color: #304255;
   -webkit-transform: scale(0);
           transform: scale(0);
   opacity: 0;
   -webkit-transition: .3s;
   transition: .3s;
   z-index: -1;
-}
-
-header nav ul li a:hover {
-  color: black;
 }
 
 header nav ul li a:hover:before {
@@ -101,6 +124,152 @@ header nav ul li a:hover:after {
   opacity: 1;
 }
 
+/*----- END OF HEADER -----*/
+/*----- BEST FILM -----*/
+#best-film {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  padding-top: 20px;
+  padding-bottom: 30px;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  background-color: #1b252f;
+  -webkit-box-shadow: 1px 1px 10px #778899;
+          box-shadow: 1px 1px 10px #778899;
+}
+
+#best-film #best-film__img {
+  width: 200px;
+  height: 300px;
+  border-radius: 5px;
+  -webkit-box-shadow: 5px 10px 5px black;
+          box-shadow: 5px 10px 5px black;
+}
+
+#best-film #best-film__info {
+  max-width: 50%;
+  min-height: 100%;
+  padding-right: 120px;
+  margin-left: 25px;
+  position: relative;
+}
+
+#best-film #best-film__info #best-film__title {
+  display: block;
+  font-family: "MV Boli", "Comic Sans MS", cursive;
+  font-size: 3em;
+  text-shadow: 2px 2px 3px black;
+}
+
+#best-film #best-film__info #best-film__description {
+  color: white;
+  display: block;
+  text-align: justify;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-size: 1.2em;
+}
+
+#best-film #best-film__info #open-modal {
+  font-weight: bold;
+  background: white;
+  color: black;
+  padding: 0.4em 1em;
+  border-radius: 3px;
+  display: block;
+  margin: auto;
+  border: none;
+}
+
+#best-film #best-film__info #open-modal:hover {
+  background-color: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+}
+
+/*----- END OF BEST FILM -----*/
+/*----- CAROUSEL -----*/
+.title {
+  padding-top: 20px;
+  font-family: "MV Boli", "Comic Sans MS", cursive;
+  font-size: 2.4em;
+}
+
+.carousel {
+  position: relative;
+  padding-bottom: 20px;
+}
+
+.carousel .carousel__container {
+  -webkit-transition: -webkit-transform 0.5s;
+  transition: -webkit-transform 0.5s;
+  transition: transform 0.5s;
+  transition: transform 0.5s, -webkit-transform 0.5s;
+  -webkit-transform: translate3d(0, 0, 0);
+          transform: translate3d(0, 0, 0);
+}
+
+.carousel .carousel__container .carousel__item {
+  float: left;
+}
+
+.carousel .carousel__container .carousel__item .item {
+  border-radius: 5px;
+  margin: 20px 40px;
+}
+
+.carousel .carousel__container .carousel__item .item:hover {
+  opacity: 0.6;
+  cursor: pointer;
+  -webkit-box-shadow: rgba(119, 136, 153, 0.589) 5px 5px 25px;
+          box-shadow: rgba(119, 136, 153, 0.589) 5px 5px 25px;
+}
+
+.carousel .carousel__container::after {
+  content: '';
+  clear: both;
+  display: table;
+}
+
+.carousel .carousel__next, .carousel .carousel__prev {
+  position: absolute;
+  color: #fff;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 4em;
+  top: 35%;
+  right: 10px;
+  width: 60px;
+  height: 60px;
+  line-height: 50px;
+  text-align: justify;
+  border-radius: 50%;
+  background: -webkit-gradient(linear, left top, right top, from(rgba(0, 0, 0, 0)), to(black));
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0) 0%, black 100%);
+  -webkit-transition: -webkit-transform 0.3s;
+  transition: -webkit-transform 0.3s;
+  transition: transform 0.3s;
+  transition: transform 0.3s, -webkit-transform 0.3s;
+  cursor: pointer;
+}
+
+.carousel .carousel__prev {
+  right: auto;
+  left: 10px;
+  text-align: end;
+  background: -webkit-gradient(linear, left top, right top, from(black), to(rgba(0, 0, 0, 0)));
+  background: linear-gradient(90deg, black 0%, rgba(0, 0, 0, 0) 100%);
+}
+
+.carousel .carousel__next:hover, .carousel .carousel__prev:hover {
+  -webkit-transform: scale(1.2);
+          transform: scale(1.2);
+}
+
+/*----- END OF CAROUSEL -----*/
+/*----- MODAL -----*/
 .modal {
   visibility: hidden;
   position: fixed;
@@ -124,7 +293,6 @@ header nav ul li a:hover:after {
   opacity: 0;
   -webkit-transition: all 350ms ease-in;
   transition: all 350ms ease-in;
-  border: solid 5px white;
 }
 
 .modal .modal__dialog {
@@ -134,8 +302,9 @@ header nav ul li a:hover:after {
   max-width: 70%;
   max-height: 85%;
   border-radius: 5px;
-  border: solid;
-  border-color: white;
+  border-style: groove;
+  border-width: 1px;
+  border-color: #2D3641;
   background: black;
   color: white;
   overflow: auto;
@@ -151,12 +320,14 @@ header nav ul li a:hover:after {
 .modal .modal__dialog .modal__content .close {
   float: right;
   text-align: center;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
   display: block;
-  height: 25px;
-  width: 25px;
-  line-height: 25px;
+  height: 30px;
+  width: 30px;
+  line-height: 30px;
   border-radius: 50%;
-  background-color: rgba(255, 0, 0, 0.2);
+  font-size: 1.1em;
+  background-color: rgba(255, 0, 0, 0.3);
 }
 
 .modal .modal__dialog .modal__content .close:hover {
@@ -169,114 +340,5 @@ header nav ul li a:hover:after {
   opacity: 1;
 }
 
-h1 {
-  color: red;
-  text-align: center;
-}
-
-#best-film {
-  width: 100%;
-  height: 100%;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  padding-right: 60px;
-  padding-top: 40px;
-  padding-bottom: 40px;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  background-color: #1b252f;
-  -webkit-box-shadow: 1px 1px 10px #778899;
-          box-shadow: 1px 1px 10px #778899;
-}
-
-#best-film #best-film__img {
-  width: 200px;
-  height: 300px;
-  border: 2px groove #778899;
-  border-radius: 5px;
-  -webkit-box-shadow: 5px 5px 5px black;
-          box-shadow: 5px 5px 5px black;
-}
-
-#best-film #best-film__info {
-  max-width: 50%;
-  min-height: 100%;
-  padding-top: 40px;
-  padding-right: 120px;
-  margin-left: 25px;
-  position: relative;
-}
-
-#best-film #best-film__info #best-film__title {
-  display: inline-block;
-  color: white;
-  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-}
-
-#best-film #best-film__info #best-film__description {
-  color: white;
-  display: block;
-  text-align: justify;
-  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-  font-size: 1.2em;
-}
-
-#best-film #best-film__info #open-modal {
-  font-weight: bold;
-  background: white;
-  color: black;
-  padding: 5px 10px;
-  margin-bottom: 1rem;
-  border-radius: 5px;
-  display: block;
-  margin: auto;
-}
-
-.carousel {
-  position: relative;
-  overflow: hidden;
-}
-
-.carousel .carousel__container {
-  -webkit-transition: -webkit-transform 0.5s;
-  transition: -webkit-transform 0.5s;
-  transition: transform 0.5s;
-  transition: transform 0.5s, -webkit-transform 0.5s;
-  -webkit-transform: translate3d(0, 0, 0);
-          transform: translate3d(0, 0, 0);
-}
-
-.carousel .carousel__container .carousel__item {
-  float: left;
-}
-
-.carousel .carousel__container .carousel__item img:hover {
-  opacity: 0.6;
-  border: solid 1px white;
-  cursor: pointer;
-}
-
-.carousel .carousel__next, .carousel .carousel__prev {
-  position: absolute;
-  color: #fff;
-  font-size: 5em;
-  background: black;
-  width: 50px;
-  padding: 20px;
-  text-align: center;
-  z-index: 1;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  background: -webkit-gradient(linear, left top, right top, from(rgba(0, 0, 0, 0)), to(black));
-  background: linear-gradient(90deg, rgba(0, 0, 0, 0) 0%, black 100%);
-  cursor: pointer;
-}
-
-.carousel .carousel__prev {
-  right: auto;
-  left: -20px;
-}
+/*----- END OF MODAL -----*/
 /*# sourceMappingURL=styles.css.map */

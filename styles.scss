@@ -1,20 +1,47 @@
-$duration: 500ms;
+body, html {
+  background-color: #000;
+  color: #fff;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
 
 body {
   margin: 0;
-  background-color: #000;
-  color: #fff;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  overflow-x: hidden;
 }
 
+h1 {
+  color: rgb(199, 0, 0);
+  text-align: center;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px black;
+  border-radius: 8px;
+  background-color: #778899;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgb(45, 54, 65);
+  border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #1f2429;
+}
+
+/*----- HEADER -----*/
 header {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: flex-end;
 
   #main-title {
     display: flex;
-    flex-direction: column;
     padding-left: 20px;
   }
 
@@ -32,8 +59,8 @@ header {
         text-decoration: none;
         padding: 10px 20px;
         color: white;
-        font-size: 1.1em;
-        font-weight: 400;
+        font-size: 1em;
+        font-weight: 500;
         transition: .5s;
         z-index: 1;
 
@@ -44,27 +71,26 @@ header {
           left: 0;
           width: 100%;
           height: 100%;
-          border-top: 1px solid #778899;
-          border-bottom: 1px solid #778899;
-          transform: scaleY(2);
+          border-top: 1px solid #304255;
+          border-bottom: 1px solid #304255;
+          transform: scaleY(3);
           opacity: 0;
           transition: .3s;
         }
         &:after {
           content: '';
           position: absolute;
-          top: 2px;
+          top: 1px;
           left: 0;
           width: 100%;
           height: 100%;
-          background-color: #778899;
+          background-color: #304255;
           transform: scale(0);
           opacity: 0;
           transition: .3s;
           z-index: -1;
         }
         &:hover {
-          color: black;
           &:before {
             transform: scaleY(1);
             opacity: 1;
@@ -78,7 +104,136 @@ header {
     }
   }
 }
+/*----- END OF HEADER -----*/
 
+/*----- BEST FILM -----*/ 
+#best-film {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  padding-top: 20px;
+  padding-bottom: 30px;
+  justify-content: center;
+  background-color: #1b252f;
+  box-shadow: 1px 1px 10px #778899;
+
+  #best-film__img {
+    width: 200px;
+    height:300px;
+    border-radius: 5px;
+    box-shadow: 5px 10px 5px black;
+  }
+
+  #best-film__info {
+    max-width: 50%;
+    min-height: 100%;
+    padding-right: 120px;
+    margin-left:25px;
+    position: relative;
+      
+    #best-film__title {
+      display: block;
+      font-family: "MV Boli", "Comic Sans MS", cursive;
+      font-size: 3em;
+      text-shadow: 2px 2px 3px black;
+    }
+
+    #best-film__description {
+      color: white;
+      display: block;
+      text-align: justify;
+      font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+      font-size: 1.2em;
+    }
+
+    #open-modal {
+      font-weight: bold;
+      background: white;
+      color: black;
+      padding: 0.4em 1em;
+      border-radius: 3px;
+      display: block;
+      margin: auto;
+      border: none;
+
+      &:hover {
+        background-color: rgba(white, 0.5);
+        cursor: pointer;
+      }
+    }
+  }
+}
+/*----- END OF BEST FILM -----*/
+
+/*----- CAROUSEL -----*/
+.title {
+  padding-top: 20px;
+  font-family: "MV Boli", "Comic Sans MS", cursive;
+  font-size: 2.4em;
+}
+
+.carousel {
+  position: relative;
+  padding-bottom: 20px;
+
+  .carousel__container {
+    transition: transform 0.5s;
+    transform: translate3d(0, 0, 0);
+
+    .carousel__item {
+      float: left;
+
+      .item {
+        border-radius: 5px;
+        margin: 20px 40px;
+      }
+      
+      .item:hover {
+        opacity: 0.6;
+        cursor: pointer;
+        box-shadow: rgba(119, 136, 153, 0.589) 5px 5px 25px;
+      }
+    }
+  }
+
+  .carousel__container::after {
+    content: '';
+    clear: both;
+    display: table;
+  }
+
+  .carousel__next, .carousel__prev {
+    position: absolute;
+    color: #fff;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 4em;
+    top: 35%;
+    right: 10px;
+    width: 60px;
+    height: 60px;
+    line-height: 50px;
+    text-align: justify;
+    border-radius: 50%;
+    background: linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 100%);
+    transition: transform 0.3s;
+    cursor: pointer;
+  }
+
+  .carousel__prev {
+    right: auto;
+    left: 10px;
+    text-align: end;
+    background: linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%);
+
+  }
+
+  .carousel__next:hover, .carousel__prev:hover {
+    transform: scale(1.2);
+  }
+}
+/*----- END OF CAROUSEL -----*/
+
+/*----- MODAL -----*/
 .modal {
   visibility: hidden;
   position: fixed;
@@ -95,7 +250,6 @@ header {
   cursor: pointer;
   opacity: 0;
   transition: all 350ms ease-in;
-  border: solid 5px white;
 
   .modal__dialog {
     position: relative;
@@ -104,8 +258,9 @@ header {
     max-width: 70%;
     max-height: 85%;
     border-radius: 5px;
-    border: solid;
-    border-color: white;
+    border-style: groove;
+    border-width: 1px;
+    border-color: #2D3641;
     background: black;
     color: white;
     overflow: auto;
@@ -120,12 +275,14 @@ header {
     .modal__content .close {
       float: right;
       text-align: center;
+      font-family: Verdana, Geneva, Tahoma, sans-serif;
       display: block;
-      height: 25px;
-      width: 25px;
-      line-height: 25px;
+      height: 30px;
+      width: 30px;
+      line-height: 30px;
       border-radius: 50%;
-      background-color: rgba(255, 0, 0, 0.2);
+      font-size: 1.1em;
+      background-color: rgba(255, 0, 0, 0.3);
 
         &:hover {
           cursor: pointer;
@@ -140,102 +297,4 @@ header {
   visibility: visible;
   opacity: 1;
 }
-
-
-h1 {
-  color: red;
-  text-align: center;
-}
-
-#best-film {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  padding-right: 60px;
-  padding-top: 40px;
-  padding-bottom: 40px;
-  justify-content: center;
-  background-color: #1b252f;
-  box-shadow: 1px 1px 10px #778899;
-
-  #best-film__img {
-    width: 200px;
-    height:300px;
-    border: 2px groove #778899;
-    border-radius: 5px;
-    box-shadow: 5px 5px 5px black;
-  }
-
-  #best-film__info {
-    max-width: 50%;
-    min-height: 100%;
-    padding-top: 40px;
-    padding-right: 120px;
-    margin-left:25px;
-    position: relative;
-      
-    #best-film__title {
-      display: inline-block;
-      color: white;
-      font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    }
-
-    #best-film__description {
-      color: white;
-      display: block;
-      text-align: justify;
-      font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-      font-size: 1.2em;
-    }
-
-    #open-modal {
-      font-weight: bold;
-      background: white;
-      color: black;
-      padding: 5px 10px;
-      margin-bottom: 1rem;
-      border-radius: 5px;
-      display: block;
-      margin: auto;
-    }
-  }
-}
-
-.carousel {
-  position: relative;
-  overflow: hidden;
-
-  .carousel__container {
-    transition: transform 0.5s;
-    transform: translate3d(0, 0, 0);
-
-    .carousel__item {
-      float: left;
-      
-      img:hover {
-        opacity: 0.6;
-        border: solid 1px white; 
-        cursor: pointer;
-      }
-    }
-  }
-
-  .carousel__next, .carousel__prev {
-    position: absolute;
-    color: #fff;
-    font-size: 5em;
-    background:rgb(0,0,0);
-    width: 50px;
-    padding: 20px;
-    text-align: center;
-    z-index: 1;
-    top: 0; bottom:0; right: 0;
-    background: linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 100%);
-    cursor: pointer;
-  }
-
-  .carousel__prev {
-    right: auto;
-    left: -20px;
-  }
-}
+/*----- END OF MODAL -----*/
